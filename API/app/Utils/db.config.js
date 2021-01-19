@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const url = "mongodb+srv://admin:admin@cluster0.bqmwr.mongodb.net/test?retryWrites=true&w=majority"
+const url = "YOUR_DB_URL"
 module.exports = async (db) => {
   try {
     const conn = await mongoose.connect(url, {
