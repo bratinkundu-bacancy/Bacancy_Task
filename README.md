@@ -11,6 +11,6 @@ Project is created with:
 ##### Search Result
 ![Searching](./Images/Search.png)
 ##### Add User Modal
-![Add User](./Images/Screenshot from 2021-01-19 19-30-49.png)
+![Add User](./Images/AddUser.png)
 ##### Edit User Modal
-![Edit User](./Images/Screenshot from 2021-01-19 19-26-59.png)
+![Edit User](./Images/EditUser.png)
