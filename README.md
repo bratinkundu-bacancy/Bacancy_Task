@@ -6,7 +6,7 @@ Project is created with:
 * Angular 11
 
 ## Screenshots
-![User List](./images/UserList.png)
-![Searching](./images/Search.png)
-![Add User](./images/Screenshot from 2021-01-19 19-30-49.png)
-![Edit User](./images/Screenshot from 2021-01-19 19-26-59.png)
+![User List](./Images/UserList.png)
+![Searching](./Images/Search.png)
+![Add User](./Images/Screenshot from 2021-01-19 19-30-49.png)
+![Edit User](./Images/Screenshot from 2021-01-19 19-26-59.png)
