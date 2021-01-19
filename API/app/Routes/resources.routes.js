@@ -4,7 +4,10 @@ const resourceController = require('../Controllers/resources.controller');
 router.get('/getAll',async (req,res)=>{
     try{
         let skipRecords = parseInt(req.query.skip);
-        let result = await resourceController.getAllResources(skipRecords);
+        let sortColumn = req.query.sortColumn;
+        let sortOrder = req.query.sortOrder;
+        let searchText = req.query.searchText;
+        let result = await resourceController.getAllResources(skipRecords,sortColumn,sortOrder,searchText);
         res.send(result);
     }
     catch(err){

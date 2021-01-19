@@ -1,10 +1,24 @@
 const Users = require('../Models/user.model');
 
-exports.getAllResources = async (skipRecords) => {
+exports.getAllResources = async (skipRecords,sortColumn,sortOrder,searchText) => {
     try {
-        return await Users.find({}).skip(skipRecords).limit(10);
+        const sortVal = {};
+        if(sortColumn == undefined){
+            sortColumn = "name";
+        }
+        else{
+            sortVal[sortColumn] = sortOrder;
+        }
+        if(searchText != ''){
+            return await Users.find({$text: {$search: searchText}}).skip(skipRecords).limit(10);
+        }
+        else{
+            return await Users.find({}).sort(sortVal).skip(skipRecords).limit(10);
+        }
+        
     } 
     catch (err) {
+        console.log(err)
         throw new Error(` Error: ${err}`);
     }
 }
