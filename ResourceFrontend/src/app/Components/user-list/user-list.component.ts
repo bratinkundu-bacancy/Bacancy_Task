@@ -43,8 +43,10 @@ export class UserListComponent implements OnInit {
   getAllUsers(filter){
     this.emptyFormData();
     this.userService.getUserList(filter.FiltertoString()).subscribe((res)=>{
-      this.userList = res;
-      this.recordCount = this.userList.length;
+      if(res){
+        this.userList = res;
+        this.recordCount = this.userList.length;
+      }
     })
   }
 
@@ -58,24 +60,29 @@ export class UserListComponent implements OnInit {
 
   addUser(){
     this.userService.addUser(this.userForm.value).subscribe((res)=>{
-      console.log(res);
-      this.getAllUsers(this.initFilter);
+      if(res['status'] == 'Success')
+      this.initFilter.skipRecord = 0;
+        this.getAllUsers(this.initFilter);
       this.showModal = false;
     })
   }
 
   deleteUser(userId : any){
     this.userService.deleteUser(userId).subscribe((res)=>{
-      console.log(res)
-      this.getAllUsers(this.initFilter);
+      if(res['status'] == 'Success'){
+        this.initFilter.skipRecord = 0;
+        this.getAllUsers(this.initFilter);
+      }
     });
   }
 
   editUser(){
     this.userService.updateUser(this.userForm.value).subscribe((res)=>{
-      console.log(res);
-      this.getAllUsers(this.initFilter);
-      this.showModal = false;
+      if(res['status'] == 'Success'){
+        this.initFilter.skipRecord = 0;
+        this.getAllUsers(this.initFilter);
+        this.showModal = false;
+      }
     })
   }
 
@@ -103,11 +110,23 @@ export class UserListComponent implements OnInit {
     else{ this.initFilter.sortOrder = this.designationSort; this.designationSort = this.designationSort == -1 ? 1 : -1; }
     this.initFilter.sortCoulumn = columnName;
     this.initFilter.searchText = this.searchText;
+    this.initFilter.skipRecord = 0;
     this.getAllUsers(this.initFilter);
   }
 
   search(){
     this.initFilter.searchText = this.searchText;
+    this.initFilter.skipRecord = 0;
     this.getAllUsers(this.initFilter);
   }
+
+  onScroll() {
+    this.initFilter.skipRecord = this.userList.length;  
+    this.userService.getUserList(this.initFilter.FiltertoString()).subscribe(
+      data => {
+        this.userList = this.userList.concat(data);
+      }
+    )
+  }
+
 }

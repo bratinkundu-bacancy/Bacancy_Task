@@ -21,7 +21,7 @@ router.post('/add', async (req,res)=>{
     try{
         let data = req.body;
         await resourceController.addResource(data);
-        res.send(JSON.stringify({"status":"User Added successfully!"}))
+        res.send(JSON.stringify({"status":"Success","message":"User Added successfully!"}))
     }
     catch(err){
         res.status(500).json({
@@ -35,7 +35,7 @@ router.post('/update', async (req,res)=>{
         let id = req.body.id;
         let data = req.body;
         await resourceController.updateResource(id,data);
-        res.send(JSON.stringify({"status":"User Updated successfully!"}))
+        res.send(JSON.stringify({"status":"Success","message":"User Updated successfully!"}))
     }
     catch(err){
         res.status(500).json({
@@ -48,7 +48,7 @@ router.post('/delete', async (req,res)=>{
     try{
         const id = req.body.id;
         await resourceController.deleteResource(id);
-        res.send(JSON.stringify({"status":"User Deleted successfully!"}))
+        res.send(JSON.stringify({"status":"Success","message":"User Deleted successfully!"}))
     }
     catch(err){
         res.status(500).json({

@@ -3,14 +3,10 @@ const Users = require('../Models/user.model');
 exports.getAllResources = async (skipRecords,sortColumn,sortOrder,searchText) => {
     try {
         const sortVal = {};
-        if(sortColumn == undefined){
-            sortColumn = "name";
-        }
-        else{
-            sortVal[sortColumn] = sortOrder;
-        }
+        sortVal[sortColumn] = sortOrder;
+        
         if(searchText != ''){
-            return await Users.find({$text: {$search: searchText}}).skip(skipRecords).limit(10);
+            return await Users.find({$text: {$search: searchText}}).skip(skipRecords).limit(8);
         }
         else{
             return await Users.find({}).sort(sortVal).skip(skipRecords).limit(10);

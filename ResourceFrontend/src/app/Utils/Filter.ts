@@ -1,5 +1,5 @@
 export class Filter{
-    sortCoulumn : any;
+    sortCoulumn : any = 'name';
     sortOrder : any = -1;
     searchText : any = '';
     skipRecord : any = 0;

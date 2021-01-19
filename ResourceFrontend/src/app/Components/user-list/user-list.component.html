@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="text-center"><h1 class="row mt-5">User Management Portal</h1></div>
+    <div class="text-center justify-content-center"><h1 class="row mt-5">User Management Portal</h1></div>
     <div class="row mt-5"> 
         <div class="col-md-6">
             <input [(ngModel)]="searchText" placeholder="Search" (keyup.enter)="search()" class="form-control">
@@ -10,7 +10,8 @@
         </div>
 
 </div>
-<div>
+
+    <div infiniteScroll [infiniteScrollDistance]="3" [infiniteScrollThrottle]="50" (scrolled)="onScroll()">
     <table class="table mt-3">
         <thead>
             <tr>
@@ -30,7 +31,7 @@
                 <td scope="col">{{user.email }}</td>
                 <td scope="col">{{user.mobileNo }}</td>
                 <td scope="col">{{user.designation}}</td>
-                <td scope="col"><img src="" onerror=""/></td>
+                <td scope="col"><img src="{{user.image}}" onerror="this.src='../../../assets/blank.webp'" height="50" width="50" /></td>
                 <td scope="col float-right"><i class="far fa-edit btn btn-warning" data-toggle="modal" data-target="#exampleModal" (click)="openModal('edit',user)"></i><i class="fas fa-trash-alt ml-2 btn btn-danger" (click)="deleteUser(user._id)"></i></td>
             </tr>
         </tbody>
