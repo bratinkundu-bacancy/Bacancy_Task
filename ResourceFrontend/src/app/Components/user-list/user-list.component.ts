@@ -103,6 +103,10 @@ export class UserListComponent implements OnInit {
       }
   }
 
+  closeModal(){
+    this.emptyFormData();
+  }
+
   sort(columnName : any){
     if(columnName == 'name'){ this.initFilter.sortOrder = this.nameSort; this.nameSort = this.nameSort == -1 ? 1 : -1; }
     else if(columnName == 'mobileNo'){ this.initFilter.sortOrder = this.mobileSort; this.mobileSort = this.mobileSort == -1 ? 1 : -1; }
