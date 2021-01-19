@@ -6,11 +6,11 @@ Project is created with:
 * Angular 11
 
 ## Screenshots
-##### Listing
+### Listing
 ![User List](./Images/UserList.png)
-##### Search Result
+### Search Result
 ![Searching](./Images/Search.png)
-##### Add User Modal
+### Add User Modal
 ![Add User](./Images/AddUser.png)
-##### Edit User Modal
+### Edit User Modal
 ![Edit User](./Images/EditUser.png)
