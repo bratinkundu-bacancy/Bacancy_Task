@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/Services/user.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Filter } from '../../Utils/Filter';
+
 
 
 @Component({
@@ -26,7 +29,7 @@ export class UserListComponent implements OnInit {
 
   userForm : FormGroup;
   initFilter = new Filter();
-  constructor(private userService : UserService, private formBuilder : FormBuilder) {
+  constructor(private userService : UserService, private formBuilder : FormBuilder, private spinner : NgxSpinnerService, private toaster : ToastrService) {
    }
   
   ngOnInit(): void {
@@ -41,11 +44,17 @@ export class UserListComponent implements OnInit {
   }
 
   getAllUsers(filter){
+    this.spinner.show();
     this.emptyFormData();
     this.userService.getUserList(filter.FiltertoString()).subscribe((res)=>{
       if(res){
         this.userList = res;
         this.recordCount = this.userList.length;
+        this.spinner.hide();
+      }
+      else{
+        this.toaster.error('There was some error fetching user. Please try again.');
+        this.spinner.hide();
       }
     })
   }
@@ -59,11 +68,20 @@ export class UserListComponent implements OnInit {
   }
 
   addUser(){
+    this.spinner.show();
     this.userService.addUser(this.userForm.value).subscribe((res)=>{
-      if(res['status'] == 'Success')
-      this.initFilter.skipRecord = 0;
+      if(res['status'] == 'Success'){
+        this.toaster.success('User added sucessfully!');
+        this.initFilter.skipRecord = 0;
+        this.spinner.hide();
         this.getAllUsers(this.initFilter);
-      this.showModal = false;
+        this.showModal = false;
+      }
+      else{
+        this.toaster.error('There was some error adding user. Please try again.');
+        this.spinner.hide();
+        this.showModal = false;
+      }
     })
   }
 
@@ -71,16 +89,29 @@ export class UserListComponent implements OnInit {
     this.userService.deleteUser(userId).subscribe((res)=>{
       if(res['status'] == 'Success'){
         this.initFilter.skipRecord = 0;
+        this.toaster.success('User deleted sucessfully!');
         this.getAllUsers(this.initFilter);
+      }
+      else{
+        this.toaster.error('There was some error deleting user. Please try again.');
+        this.spinner.hide();
       }
     });
   }
 
   editUser(){
+    this.spinner.show();
     this.userService.updateUser(this.userForm.value).subscribe((res)=>{
       if(res['status'] == 'Success'){
         this.initFilter.skipRecord = 0;
+        this.spinner.hide();
+        this.toaster.success('User updated sucessfully!');
         this.getAllUsers(this.initFilter);
+        this.showModal = false;
+      }
+      else{
+        this.toaster.error('There was some error updating user. Please try again.');
+        this.spinner.hide();
         this.showModal = false;
       }
     })
@@ -125,10 +156,12 @@ export class UserListComponent implements OnInit {
   }
 
   onScroll() {
+    this.spinner.show();
     this.initFilter.skipRecord = this.userList.length;  
     this.userService.getUserList(this.initFilter.FiltertoString()).subscribe(
       data => {
         this.userList = this.userList.concat(data);
+        this.spinner.hide();
       }
     )
   }

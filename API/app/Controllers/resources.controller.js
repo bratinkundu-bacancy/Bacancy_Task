@@ -28,11 +28,9 @@ exports.updateResource = async (id,data) => {
 }
 exports.addResource = async (data) => {
     try{
-        console.log(data)
         await Users.create(data);
     }
     catch(err){
-        console.log(err)
         throw new Error(` Error: ${err}`);
     }
     
